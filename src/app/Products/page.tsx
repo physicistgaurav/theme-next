@@ -24,8 +24,8 @@ const ProductsScreen = () => {
         {products?.map((product: any) => (
           <Link
             key={product.id}
-            href="/ProductDetail/[productId]"
-            as={`/ProductDetail/${product.id}`}
+            href={`/[product]`}
+            as={`/Products/${product.id}`}
           >
             <div className="relative  m-10 flex justify-between w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md">
               <div className="flex flex-col">

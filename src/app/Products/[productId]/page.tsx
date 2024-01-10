@@ -1,11 +1,13 @@
-import { useRouter } from "next/router";
+"use client";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { useProductsStore } from "../../../zustand/store";
+import { useProductsStore } from "../../../../zustand/store";
 
-const ProductDetail = () => {
-  const router = useRouter();
-  const { productId } = router.query;
+const ProductDetail = ({ params }: {params: { productId: number }}) => {
+  console.log("first", params);
+//   const router = useRouter();
+  const { productId } = params.productId;
 
   const products = useProductsStore((state: any) => state.data);
   const getProducts = useProductsStore((state: any) => state.getProducts);
@@ -13,10 +15,10 @@ const ProductDetail = () => {
   useEffect(() => {
     getProducts();
   }, [getProducts]);
-
   const product = products.find((product: any) => {
     console.log("Product ID in products array:", product.id);
     console.log("Product ID from router:", productId);
+    console.log("Equality check:", product.id === productId);
     return product.id === productId;
   });
 
