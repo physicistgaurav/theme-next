@@ -1,13 +1,17 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useProductsStore, useUsersStore } from "../../../zustand/store";
 import Image from "next/image";
 import Link from "next/link";
 
+import { useTheme } from "next-themes";
+
 const ProductsScreen = () => {
   // const users = useUsersStore((state:any) => state.data);
   // const getUsers = useUsersStore((state:any) => state.getUsers);
+
+  const { theme, setTheme } = useTheme();
 
   const products = useProductsStore((state: any) => state.data);
   const getProducts = useProductsStore((state: any) => state.getProducts);
@@ -18,70 +22,76 @@ const ProductsScreen = () => {
     getProducts();
   }, [getProducts]);
 
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const toggleTheme = () => setTheme(theme === "light" ? "dark" : "light");
+
   return (
     <div>
-      <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <button
+        onClick={toggleTheme}
+        type="button"
+        className={`mt-5 ml-2 ${
+          isDarkMode ? "bg-gray-800 text-white" : "bg-white text-gray-800"
+        } 
+      rounded-full px-4 py-2 shadow hover:shadow-md transition duration-150 ease-in-out`}
+      >
+        {theme === "light" ? "☀️ Light" : "☪ Dark"}
+      </button>
+
+      <ul className="w-fit  mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">
         {products?.map((product: any) => (
           <Link
             key={product.id}
             href={`/[product]`}
             as={`/Products/${product.id}`}
           >
-            <div className="relative  m-10 flex justify-between w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md">
-              <div className="flex flex-col">
-                <div className="relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl">
-                  <Image
-                    className="object-cover  h-full mx-auto w-2/3 flex justify-center items-center"
-                    width={100}
-                    height={50}
-                    quality={95}
-                    priority
-                    src={product.image}
-                    alt="product image"
-                  />
-                  {/* <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">
-                  {product.category}
-                </span> */}
-                </div>
-                <div>
-                  <h5 className="text-xl mt-3 mx-5 tracking-tight text-slate-900">
+            <div className="w-72 bg-white border p-2 shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
+              <a href="#">
+                <Image
+                  src={product.image}
+                  width={100}
+                  height={100}
+                  quality={95}
+                  priority
+                  alt="Product"
+                  className="h-48 w-48 mx-auto object-contain rounded-t-xl"
+                />
+                <div className="px-4 py-3 w-72">
+                  <span className="text-gray-400 mr-3 uppercase text-xs">
+                    {product.category}
+                  </span>
+                  <p className="text-lg font-bold text-black truncate block capitalize">
                     {product.title}
-                  </h5>
-                </div>
-              </div>
-              <div className="mt-4 px-5 pb-5">
-                <div className="mt-2 mb-5 flex items-center justify-between">
-                  <p>
-                    <span className="text-3xl font-bold text-slate-900">
-                      ${product.price}
-                    </span>
                   </p>
-                  <div className="flex flex-row items-center">
-                    <StarRating rating={product.rating.rate} />
-
-                    <span className="mr-2 ml-3 rounded bg-yellow-200 px-2.5 py-0.5 text-xs font-semibold">
-                      {product.rating.rate}
-                    </span>
+                  <div className="flex items-center">
+                    <p className="text-lg font-semibold text-black cursor-auto my-3">
+                      ${product.price}
+                    </p>
+                    <del>
+                      <p className="text-sm text-gray-600 cursor-auto ml-2">
+                        ${(product.price + 50).toFixed(2)}
+                      </p>
+                    </del>
+                    <div className="ml-auto">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        fill="currentColor"
+                        className="bi bi-bag-plus dark:text-black"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z"
+                        />
+                        <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
+                      </svg>
+                    </div>
                   </div>
                 </div>
-                <div className="flex items-center justify-center rounded-md bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="mr-2 h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                    />
-                  </svg>
-                  Add to cart
-                </div>
-              </div>
+              </a>
             </div>
           </Link>
         ))}

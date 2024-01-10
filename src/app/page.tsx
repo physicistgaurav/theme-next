@@ -9,11 +9,9 @@ export default function Home() {
     <main className="flex flex-col items-center px-4">
       {/* <ThemeProvider> */}
       {/* <Landing /> */}
-      {/* <About /> */}
       {/* </ThemeProvider> */}
-      {/* <ProductsScreen /> */}
+
       <Login />
-      {/* <ProductsScreen /> */}
     </main>
   );
 }

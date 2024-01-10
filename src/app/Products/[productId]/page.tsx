@@ -3,8 +3,9 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useProductsStore } from "../../../../zustand/store";
+import Link from "next/link";
 
-const ProductDetail = ({ params }: { params: { productId: any } }) => {
+const ProductDetail = ({ params }: { params: { productId: number } }) => {
   const { productId } = params;
 
   const [isChecked, setIsChecked] = useState(true);
@@ -21,8 +22,21 @@ const ProductDetail = ({ params }: { params: { productId: any } }) => {
     getProducts();
   }, [getProducts]);
 
-  const product = products.find(
-    (product: any) => product.id === Number(productId)
+  type ProductType = {
+    id: number;
+    title: string;
+    description: string;
+    price: number;
+    category: string;
+    image: string;
+    rating: {
+      rate: number;
+      count: number;
+    };
+  };
+
+  const product: ProductType = products.find(
+    (product: ProductType) => product.id === Number(productId)
   );
 
   if (!product) {
@@ -50,13 +64,13 @@ const ProductDetail = ({ params }: { params: { productId: any } }) => {
               <div className="flex items-center">
                 <span className="mx-2 text-gray-400">/</span>
                 <div className="-m-1">
-                  <a
-                    href="#"
+                  <Link
                     className="rounded-md p-1 text-sm font-medium text-gray-600 focus:text-gray-900 focus:shadow hover:text-gray-800"
+                    href="/Products"
                   >
                     {" "}
                     Products{" "}
-                  </a>
+                  </Link>
                 </div>
               </div>
             </li>
@@ -102,7 +116,7 @@ const ProductDetail = ({ params }: { params: { productId: any } }) => {
                     className="flex-0 aspect-square mb-3 h-20 overflow-hidden rounded-lg border-2 border-gray-900 text-center"
                   >
                     <Image
-                      className="h-full w-full max-w-full object-cover"
+                      className="h-full w-full max-w-full object-cover "
                       src={product.image}
                       alt=""
                       width={200}
@@ -219,7 +233,9 @@ const ProductDetail = ({ params }: { params: { productId: any } }) => {
                 <p className="peer-checked:bg-black peer-checked:text-white rounded-lg border border-black px-6 py-2 font-bold">
                   4 Months
                 </p>
-                <span className="mt-1 block text-center text-xs">$80/mo</span>
+                <span className="mt-1 block text-center text-xs">
+                  ${Number(product.price / 2).toFixed(2)}/mo
+                </span>
               </label>
               <label className="">
                 <input
@@ -232,7 +248,9 @@ const ProductDetail = ({ params }: { params: { productId: any } }) => {
                 <p className="peer-checked:bg-black peer-checked:text-white rounded-lg border border-black px-6 py-2 font-bold">
                   8 Months
                 </p>
-                <span className="mt-1 block text-center text-xs">$60/mo</span>
+                <span className="mt-1 block text-center text-xs">
+                  ${Number(product.price / 4).toFixed(2)}/mo
+                </span>
               </label>
               <label className="">
                 <input
@@ -246,7 +264,9 @@ const ProductDetail = ({ params }: { params: { productId: any } }) => {
                 <p className="peer-checked:bg-black peer-checked:text-white rounded-lg border border-black px-6 py-2 font-bold">
                   12 Months
                 </p>
-                <span className="mt-1 block text-center text-xs">$40/mo</span>
+                <span className="mt-1 block text-center text-xs">
+                  ${Number(product.price / 6).toFixed(2)}/mo
+                </span>
               </label>
             </div>
 
