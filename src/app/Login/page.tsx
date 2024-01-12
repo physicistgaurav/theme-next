@@ -45,11 +45,16 @@ export default function Login() {
                   Enter Your Password
                 </label>
               </div>
-              <input
-                className="mt-4 w-full cursor-pointer rounded-lg bg-blue-600 pt-3 pb-3 text-white shadow-lg hover:bg-blue-400"
-                type="submit"
-                value="Create account"
-              />
+              <Link
+                className="font-bold text-blue-600 no-underline hover:text-blue-400"
+                href="/Products"
+              >
+                <input
+                  className="mt-4 w-full cursor-pointer rounded-lg bg-blue-600 pt-3 pb-3 text-white shadow-lg hover:bg-blue-400"
+                  type="submit"
+                  value="Login"
+                />
+              </Link>
             </form>
             <div className="mt-4 text-center">
               <p className="text-sm text-gray-600">

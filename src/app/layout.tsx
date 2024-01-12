@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -22,11 +22,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <NextUIProvider>
-          <NextThemesProvider attribute="class" defaultTheme="dark">
-            {children}
-          </NextThemesProvider>
-        </NextUIProvider>
+        {/* <NextUIProvider> */}
+        {/* <NextThemesProvider attribute="class" defaultTheme="dark"> */}
+        {children}
+        {/* </NextThemesProvider> */}
+        {/* </NextUIProvider> */}
       </body>
     </html>
   );
