@@ -14,7 +14,7 @@ export default function Login() {
           <div className="p-8">
             <h1 className="text-3xl font-black text-slate-700">Sign in</h1>
             <p className="mt-2 mb-5 text-base leading-tight text-gray-600">
-              Sign in to get access to : )
+              Sign in to order your favourite products online
             </p>
             <form className="mt-8">
               <div className="relative mt-2 w-full">

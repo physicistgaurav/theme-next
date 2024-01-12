@@ -1,7 +1,12 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useProductsStore, useUsersStore } from "../../../zustand/store";
+import {
+  useCartStore,
+  // useCartStore,
+  useProductsStore,
+  useUsersStore,
+} from "../../../zustand/store";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -20,13 +25,15 @@ const ProductsScreen = () => {
     getProducts();
   }, [getProducts]);
 
+  const { add } = useCartStore();
+
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   const toggleTheme = () => setTheme(theme === "light" ? "dark" : "light");
 
   return (
     <div>
-      <button
+      {/* <button
         onClick={toggleTheme}
         type="button"
         className={`mt-5 ml-2 ${
@@ -35,26 +42,32 @@ const ProductsScreen = () => {
       rounded-full px-4 py-2 shadow hover:shadow-md transition duration-150 ease-in-out`}
       >
         {theme === "light" ? "☀️ Light" : "☪ Dark"}
-      </button>
+      </button> */}
 
       <ul className="w-fit  mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">
         {products?.map((product: any) => (
-          <Link
+          <div
             key={product.id}
-            href={`/[product]`}
-            as={`/Products/${product.id}`}
+            // href={`/[product]`}
+            // as={`/Products/${product.id}`}
           >
             <div className="w-72 bg-white border p-2 shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
               <a href="#">
-                <Image
-                  src={product.image}
-                  width={100}
-                  height={100}
-                  quality={95}
-                  priority
-                  alt="Product"
-                  className="h-48 w-48 mx-auto object-contain rounded-t-xl"
-                />
+                <Link
+                  key={product.id}
+                  href={`/[product]`}
+                  as={`/Products/${product.id}`}
+                >
+                  <Image
+                    src={product.image}
+                    width={100}
+                    height={100}
+                    quality={95}
+                    priority={true}
+                    alt="Product"
+                    className="h-48 w-48 mx-auto object-contain rounded-t-xl"
+                  />
+                </Link>
                 <div className="px-4 py-3 w-72">
                   <span className="text-gray-400 mr-3 uppercase text-xs">
                     {product.category}
@@ -71,7 +84,18 @@ const ProductsScreen = () => {
                         ${(product.price + 50).toFixed(2)}
                       </p>
                     </del>
-                    <div className="ml-auto">
+
+                    <Link key={product.id} href={`/myCart`}>
+                      Go to cart
+                    </Link>
+                    <div
+                      className="ml-auto"
+                      onClick={() => {
+                        console.log(product);
+                        add(product);
+                        alert("added");
+                      }}
+                    >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="20"
@@ -91,7 +115,7 @@ const ProductsScreen = () => {
                 </div>
               </a>
             </div>
-          </Link>
+          </div>
         ))}
       </ul>
     </div>

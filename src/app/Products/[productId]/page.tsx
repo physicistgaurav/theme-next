@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { useProductsStore } from "../../../../zustand/store";
+import { useCartStore, useProductsStore } from "../../../../zustand/store";
 import Link from "next/link";
 
 const ProductDetail = ({ params }: { params: { productId: number } }) => {
@@ -13,6 +13,8 @@ const ProductDetail = ({ params }: { params: { productId: number } }) => {
   const handleInputChange = () => {
     setIsChecked(!isChecked);
   };
+
+  const { add } = useCartStore();
 
   // from zustand
   const products = useProductsStore((state: any) => state.data);
@@ -26,6 +28,7 @@ const ProductDetail = ({ params }: { params: { productId: number } }) => {
     id: number;
     title: string;
     description: string;
+    count: number;
     price: number;
     category: string;
     image: string;
@@ -278,6 +281,11 @@ const ProductDetail = ({ params }: { params: { productId: number } }) => {
 
               <button
                 type="button"
+                onClick={() => {
+                  console.log(product);
+                  add(product);
+                  alert("added");
+                }}
                 className="inline-flex items-center justify-center rounded-md border-2 border-transparent bg-gray-900 bg-none px-12 py-3 text-center text-base font-bold text-white transition-all duration-200 ease-in-out focus:shadow hover:bg-gray-800"
               >
                 <svg
