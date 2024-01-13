@@ -85,9 +85,6 @@ const ProductsScreen = () => {
                       </p>
                     </del>
 
-                    <Link key={product.id} href={`/myCart`}>
-                      Go to cart
-                    </Link>
                     <div
                       className="ml-auto"
                       onClick={() => {
