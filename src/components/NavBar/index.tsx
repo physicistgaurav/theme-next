@@ -6,7 +6,7 @@ import Link from "next/link";
 export default function NavBar() {
   const cartItems = useCartStore((state) => state.cart);
   return (
-    <header className="sticky top-0 mb-2 px-4 shadow">
+    <header className="sticky top-0 mb-2 px-4 shadow bg-white">
       <div className="relative mx-auto flex max-w-screen-lg flex-col py-4 sm:flex-row sm:items-center sm:justify-between">
         <a className="flex items-center text-2xl font-black" href="/">
           <span className="mr-2 text-3xl text-blue-600">
