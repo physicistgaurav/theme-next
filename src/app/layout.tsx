@@ -1,4 +1,4 @@
-// "use client";
+"use client";
 
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -7,6 +7,7 @@ import "./globals.css";
 import { NextUIProvider } from "@nextui-org/react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import NavBar from "@/components/NavBar";
+import { usePathname } from "next/navigation";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,12 +21,14 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // const navigati = useNavigation();
+  const isLoginPage = usePathname();
   return (
     <html lang="en">
       <body className={inter.className}>
         {/* <NextUIProvider> */}
         {/* <NextThemesProvider attribute="class" defaultTheme="dark"> */}
-        <NavBar />
+        {isLoginPage === "/" ? null : <NavBar />}
         {children}
         {/* </NextThemesProvider> */}
         {/* </NextUIProvider> */}
