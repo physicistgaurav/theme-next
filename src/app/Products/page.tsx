@@ -12,6 +12,9 @@ import Link from "next/link";
 
 import { useTheme } from "next-themes";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const ProductsScreen = () => {
   // const users = useUsersStore((state:any) => state.data);
   // const getUsers = useUsersStore((state:any) => state.getUsers);
@@ -31,6 +34,11 @@ const ProductsScreen = () => {
 
   const toggleTheme = () => setTheme(theme === "light" ? "dark" : "light");
 
+  const notify = () =>
+    toast.success("Product added to cart", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+
   return (
     <div>
       {/* <button
@@ -43,6 +51,7 @@ const ProductsScreen = () => {
       >
         {theme === "light" ? "☀️ Light" : "☪ Dark"}
       </button> */}
+      <ToastContainer />
 
       <ul className="w-fit  mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">
         {products?.map((product: any) => (
@@ -90,7 +99,7 @@ const ProductsScreen = () => {
                       onClick={() => {
                         console.log(product);
                         add(product);
-                        alert("added");
+                        notify();
                       }}
                     >
                       <svg
